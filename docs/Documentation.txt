@@ -1,0 +1,73 @@
+
+
+
+
+
+
+
+DATABASE
+--------------
+
+Categoria
+...............
+Id (Guid)
+Descricao (String)
+DataCadastro (DateTime)
+
+Produto
+............
+Id (Guid)
+Nome (string)
+Preco (double)
+CategoriaId (Guid) -> ForeignKey
+Estocavel (bool)
+EstoqueMinimo (int)
+imagem
+Descriao (string)
+DataCadastro (DateTime)
+
+Cliente
+...........
+Id 
+Nome 
+Email
+Telefone
+Endereco
+Observacao
+DataCadastro
+
+Venda
+............
+Id
+ClienteId
+UsuarioId
+Total
+Observacao
+Data
+
+VendaProduto
+......................
+Id
+ProdutoId
+PrecoUnitario
+Quantidade
+SubTotal
+VendaId
+
+Estoque
+.............
+Id
+ProdutoId
+Quantidade
+UsuarioId
+Observacao
+DataEntrada
+
+---------------
+CAMADAS
+...............
+
+API
+APPLICATION
+CORE
+INFRASTRUCTURE
