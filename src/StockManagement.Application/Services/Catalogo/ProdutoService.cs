@@ -67,7 +67,7 @@ namespace StockManagement.Application.Services.Catalogo
                                     " foi cadastrado no estoque ou possui vendas registradas!");
             }
 
-            _produtoRepository.Remover(id);
+            await _produtoRepository.Remover(id);
 
             await _produtoRepository.UnitOfWork.Salvar();
         }
