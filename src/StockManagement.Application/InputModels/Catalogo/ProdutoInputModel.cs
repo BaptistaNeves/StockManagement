@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,8 +29,9 @@ namespace StockManagement.Application.InputModels.Catalogo
         [Range(1, int.MaxValue, ErrorMessage = "O Estoque Minimo deve ter o valor minimo de {1}!")]
         public int EstoqueMinimo { get; set; }
 
-        [Required(ErrorMessage = "Selecione uma Imagem para o produto!")]
         public string Imagem { get; set; }
+
+        public IFormFile ArquivoEnviado { get; set; }
 
         public string Descricao { get; set; }
     }

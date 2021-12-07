@@ -9,7 +9,6 @@ using StockManagement.Core.Interfaces.Persistence.Repositories.Catalogo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StockManagement.Application.Services.Catalogo
@@ -83,6 +82,11 @@ namespace StockManagement.Application.Services.Catalogo
                    (await _produtoRepository.ObterTodos());
         }
 
+        public void Dispose()
+        {
+            _produtoRepository?.Dispose();
+        }
+
         private bool VerificarNomeParaAdicionar(string nome)
         {
             return _produtoRepository.Buscar(p => p.Nome == nome).Result.Any();
@@ -94,9 +98,5 @@ namespace StockManagement.Application.Services.Catalogo
                 .Buscar(p => p.Nome == nome && p.Id != id).Result.Any();
         }
 
-        public void Dispose()
-        {
-            _produtoRepository?.Dispose();
-        }
     }
 }

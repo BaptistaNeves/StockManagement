@@ -19,4 +19,8 @@
     <ProjectReference Include="..\StockManagement.Infrastructure\StockManagement.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Imagens\" />
+  </ItemGroup>
+
 </Project>
