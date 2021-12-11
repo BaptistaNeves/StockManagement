@@ -3,9 +3,10 @@ using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
 using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Catalogo;
-using StockManagement.Application.ViewModels.Catalogo;
+using StockManagement.Core.DTOs.Catalogo;
 using StockManagement.Core.Entities.Catalogo;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Catalogo;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,15 +72,14 @@ namespace StockManagement.Application.Services.Catalogo
             await _produtoRepository.UnitOfWork.Salvar();
         }
 
-        public async Task<ProdutoViewModel> ObterPorId(Guid id)
+        public async Task<ProdutoDto> ObterPorId(Guid id)
         {
-            return _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterPorId(id));
+            return _mapper.Map<ProdutoDto>(await _produtoRepository.ObterPorId(id));
         }
 
-        public async Task<ICollection<ProdutoViewModel>> ObterTodos()
+        public async Task<PagedList<ProdutoDto>> ObterTodos(PaginationParams paginationParams)
         {
-            return _mapper.Map<ICollection<ProdutoViewModel>>
-                   (await _produtoRepository.ObterTodos());
+            return await _produtoRepository.ObterProdutos(paginationParams);
         }
 
         public void Dispose()

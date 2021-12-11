@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Core", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Infrastructure", "src\StockManagement.Infrastructure\StockManagement.Infrastructure.csproj", "{D60EAEFA-101C-4543-A249-4935A08DDD61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Api", "src\StockManagement.Api\StockManagement.Api.csproj", "{F6E90DAF-373A-4551-8A58-630EA7C36569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Api", "src\StockManagement.Api\StockManagement.Api.csproj", "{F6E90DAF-373A-4551-8A58-630EA7C36569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Shared", "src\StockManagement.Shared\StockManagement.Shared.csproj", "{4E5A2C91-7FD1-4160-8EC2-A6506200C41E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F6E90DAF-373A-4551-8A58-630EA7C36569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E90DAF-373A-4551-8A58-630EA7C36569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6E90DAF-373A-4551-8A58-630EA7C36569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5A2C91-7FD1-4160-8EC2-A6506200C41E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5A2C91-7FD1-4160-8EC2-A6506200C41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5A2C91-7FD1-4160-8EC2-A6506200C41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5A2C91-7FD1-4160-8EC2-A6506200C41E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Pessoa;
 using StockManagement.Application.Interface.Services.Pessoa;
 using StockManagement.Application.Interfaces.Notification;
-using StockManagement.Application.ViewModels.Pessoa;
+using StockManagement.Core.DTOs.Pessoa;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,13 +25,13 @@ namespace StockManagement.Api.Controllers.Pessoa
         }
 
         [HttpGet("obter-clientes")]
-        public async Task<ActionResult<ICollection<ClienteViewModel>>> ObterTodos()
+        public async Task<ActionResult<ICollection<ClienteDto>>> ObterTodos([FromQuery] PaginationParams paginationParams)
         {
-            return Ok(await _clienteService.ObterTodos());
+            return Ok(await _clienteService.ObterTodos(paginationParams));
         }
 
         [HttpGet("obter-cliente-por-id/{id:guid}")]
-        public async Task<ActionResult<ClienteViewModel>> ObterPorId(Guid id)
+        public async Task<ActionResult<ClienteDto>> ObterPorId(Guid id)
         {
             return Ok(await _clienteService.ObterPorId(id));
         }

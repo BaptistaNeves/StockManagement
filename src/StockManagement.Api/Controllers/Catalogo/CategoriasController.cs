@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StockManagement.Application.Extensions;
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
 using StockManagement.Application.Interfaces.Notification;
-using StockManagement.Application.ViewModels.Catalogo;
+using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,13 +21,18 @@ namespace StockManagement.Api.Controllers.Catalogo
         }
 
         [HttpGet("obter-categorias")]
-        public async Task<ActionResult<ICollection<CategoriaViewModel>>> ObterTodos()
+        public async Task<ActionResult<ICollection<CategoriaDto>>> ObterTodos([FromQuery]PaginationParams paginationParams)
         {
-            return Ok(await _categoriaService.ObterTodos());
+            var categorias = await _categoriaService.ObterTodos(paginationParams);
+
+            Response.AddPaginationHeader(categorias.CurrentPage, categorias.PageSize, categorias.TotalCount,
+                categorias.TotalPages);
+
+            return Ok(categorias);
         }
 
         [HttpGet("obter-categoria-por-id/{id:guid}")]
-        public async Task<ActionResult<CategoriaViewModel>> ObterPorId(Guid id)
+        public async Task<ActionResult<CategoriaDto>> ObterPorId(Guid id)
         {
             return Ok(await _categoriaService.ObterPorId(id));
         }

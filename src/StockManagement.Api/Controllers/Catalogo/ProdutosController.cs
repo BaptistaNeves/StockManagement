@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
 using StockManagement.Application.Interfaces.Notification;
-using StockManagement.Application.ViewModels.Catalogo;
+using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,13 +22,13 @@ namespace StockManagement.Api.Controllers.Catalogo
         }
 
         [HttpGet("obter-produtos")]
-        public async Task<ActionResult<ICollection<ProdutoViewModel>>> ObterTodos()
+        public async Task<ActionResult<ICollection<ProdutoDto>>> ObterTodos([FromQuery] PaginationParams paginationParams)
         {
-            return Ok(await _produtoService.ObterTodos());
+            return Ok(await _produtoService.ObterTodos(paginationParams));
         }
 
         [HttpGet("obter-produto-por-id/{id:guid}")]
-        public async Task<ActionResult<ProdutoViewModel>> ObterPorId(Guid id)
+        public async Task<ActionResult<ProdutoDto>> ObterPorId(Guid id)
         {
             return Ok(await _produtoService.ObterPorId(id));
         }

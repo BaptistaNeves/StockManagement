@@ -1,9 +1,8 @@
 ﻿using StockManagement.Application.InputModels.Catalogo;
-using StockManagement.Application.ViewModels.Catalogo;
+using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StockManagement.Application.Interface.Services.Catalogo
@@ -13,7 +12,7 @@ namespace StockManagement.Application.Interface.Services.Catalogo
         Task Adicionar(ProdutoInputModel Produto);
         Task Atualizar(ProdutoInputModel Produto);
         Task Remover(Guid id);
-        Task<ProdutoViewModel> ObterPorId(Guid id);
-        Task<ICollection<ProdutoViewModel>> ObterTodos();
+        Task<ProdutoDto> ObterPorId(Guid id);
+        Task<PagedList<ProdutoDto>> ObterTodos(PaginationParams paginationParams);
     }
 }

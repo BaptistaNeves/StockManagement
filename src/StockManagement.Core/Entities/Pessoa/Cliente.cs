@@ -19,14 +19,13 @@ namespace StockManagement.Core.Entities.Pessoa
         public ICollection<Venda> Vendas { get; private set; }
 
         public Cliente(string nome, string telefone, string email, 
-                       string endereco, string observacao, DateTime dataCadastro)
+                       string endereco, string observacao)
         {
             Nome = nome;
             Telefone = telefone;
             Email = email;
             Endereco = endereco;
             Observacao = observacao;
-            DataCadastro = dataCadastro;
         }
     }
 }

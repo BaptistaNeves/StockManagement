@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using StockManagement.Application.InputModels.Catalogo;
-using StockManagement.Application.Interface.Services;
 using StockManagement.Application.Interface.Services.Catalogo;
 using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Catalogo;
-using StockManagement.Application.ViewModels.Catalogo;
+using StockManagement.Core.DTOs.Catalogo;
 using StockManagement.Core.Entities.Catalogo;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Catalogo;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,15 +73,14 @@ namespace StockManagement.Application.Services.Catalogo
             await _categoriaRepository.UnitOfWork.Salvar();
         }
 
-        public async Task<CategoriaViewModel> ObterPorId(Guid id)
+        public async Task<CategoriaDto> ObterPorId(Guid id)
         {
-            return _mapper.Map<CategoriaViewModel>(await _categoriaRepository.ObterPorId(id));
+            return _mapper.Map<CategoriaDto>(await _categoriaRepository.ObterPorId(id));
         }
 
-        public async Task<ICollection<CategoriaViewModel>> ObterTodos()
+        public async Task<PagedList<CategoriaDto>> ObterTodos(PaginationParams paginationParams)
         {
-            return _mapper.Map<ICollection<CategoriaViewModel>>
-                           (await _categoriaRepository.ObterTodos());
+            return await _categoriaRepository.ObterCategorias(paginationParams);
         }
 
         private bool VerificarDescricaoParaAdicionar(string descricao)

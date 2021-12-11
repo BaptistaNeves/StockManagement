@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StockManagement.Application.ViewModels.Catalogo
+namespace StockManagement.Core.DTOs.Catalogo
 {
-    public class CategoriaViewModel
+    public class CategoriaDto
     {
         public Guid Id { get; set; }
         public string Descricao { get; set; }
         public DateTime DataCadastro { get; set; }
-        public ICollection<ProdutoViewModel> Produtos { get; set; }
-
+        public ICollection<ProdutoDto> Produtos { get; set; }
     }
 }

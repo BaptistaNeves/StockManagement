@@ -12,7 +12,7 @@ namespace StockManagement.Application.InputModels.Pessoa
         [MinLength(2, ErrorMessage = "O campo {0} deve ter no minimo {1} caracteres!")]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} deve ser informado!")]        [MinLength(2, ErrorMessage = "O campo {0} deve ter no minimo {1} caracteres!")]
+        [Required(ErrorMessage = "O campo {0} deve ser informado!")]        
         public string Telefone { get; set; }
 
         [Required(ErrorMessage = "O campo {0} deve ser informado!")]

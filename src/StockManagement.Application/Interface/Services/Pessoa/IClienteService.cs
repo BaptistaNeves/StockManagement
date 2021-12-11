@@ -1,5 +1,6 @@
 ﻿using StockManagement.Application.InputModels.Pessoa;
-using StockManagement.Application.ViewModels.Pessoa;
+using StockManagement.Core.DTOs.Pessoa;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace StockManagement.Application.Interface.Services.Pessoa
         Task Adicionar(ClienteInputModel cliente);
         Task Atualizar(ClienteInputModel cliente);
         Task Remover(Guid id);
-        Task<ClienteViewModel> ObterPorId(Guid id);
-        Task<ICollection<ClienteViewModel>> ObterTodos();
+        Task<ClienteDto> ObterPorId(Guid id);
+        Task<PagedList<ClienteDto>> ObterTodos(PaginationParams paginationParams);
     }
 }

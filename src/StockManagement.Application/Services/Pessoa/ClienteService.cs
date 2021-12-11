@@ -3,9 +3,10 @@ using StockManagement.Application.InputModels.Pessoa;
 using StockManagement.Application.Interface.Services.Pessoa;
 using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Pessoa;
-using StockManagement.Application.ViewModels.Pessoa;
+using StockManagement.Core.DTOs.Pessoa;
 using StockManagement.Core.Entities.Pessoa;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Pessoa;
+using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,14 +74,14 @@ namespace StockManagement.Application.Services.Pessoa
             await _clienteRepository.UnitOfWork.Salvar();
         }
 
-        public async Task<ClienteViewModel> ObterPorId(Guid id)
+        public async Task<ClienteDto> ObterPorId(Guid id)
         {
-            return _mapper.Map<ClienteViewModel>(await _clienteRepository.ObterPorId(id));
+            return _mapper.Map<ClienteDto>(await _clienteRepository.ObterPorId(id));
         }
 
-        public async Task<ICollection<ClienteViewModel>> ObterTodos()
+        public async Task<PagedList<ClienteDto>> ObterTodos(PaginationParams paginationParams)
         {
-            return _mapper.Map<ICollection<ClienteViewModel>>(await _clienteRepository.ObterTodos());
+            return await _clienteRepository.ObterClientes(paginationParams);
         }
 
         public void Dispose()

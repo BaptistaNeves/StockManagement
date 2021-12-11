@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using StockManagement.Application.InputModels.Catalogo;
-using StockManagement.Application.ViewModels.Catalogo;
-using StockManagement.Application.ViewModels.Pessoa;
+using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Core.DTOs.Pessoa;
 using StockManagement.Core.Entities.Catalogo;
 using StockManagement.Core.Entities.Pessoa;
+using StockManagement.Shared.Pagination;
 
 namespace StockManagement.Application.AutoMapper
 {
@@ -11,10 +11,10 @@ namespace StockManagement.Application.AutoMapper
     {
         public EntitiesToViewModelsProfile()
         {
-            CreateMap<Categoria, CategoriaViewModel>();
-            CreateMap<Produto, ProdutoViewModel>();
+            CreateMap<Categoria, CategoriaDto>();
+            CreateMap<Produto, ProdutoDto>();
 
-            CreateMap<Cliente, ClienteViewModel>();
+            CreateMap<Cliente, ClienteDto>();
         }
     }
 }
