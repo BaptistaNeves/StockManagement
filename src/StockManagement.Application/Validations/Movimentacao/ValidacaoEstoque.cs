@@ -1,14 +1,9 @@
 ﻿using FluentValidation;
-using StockManagement.Core.Entities.Movimentacao;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StockManagement.Application.InputModels.Movimentacao;
 
 namespace StockManagement.Application.Validations.Movimentacao
 {
-    public class ValidacaoEstoque : AbstractValidator<Estoque>
+    public class ValidacaoEstoque : AbstractValidator<EstoqueInputModel>
     {
         public ValidacaoEstoque()
         {

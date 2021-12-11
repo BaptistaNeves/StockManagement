@@ -16,5 +16,17 @@ namespace StockManagement.Core.Entities.Movimentacao
         public DateTime DataCadastro { get; private set; }
 
         public Produto Produto { get; private set; }
+        public Estoque(Guid? produtoId, Guid? usuarioId, int? quantidade, string observacao)
+        {
+            ProdutoId = produtoId;
+            UsuarioId = usuarioId;
+            Quantidade = quantidade;
+            Observacao = observacao;
+        }
+
+        public void DecrementarQuantidade(int quantidade)
+        {
+            Quantidade = Quantidade - quantidade;
+        }
     }
 }
