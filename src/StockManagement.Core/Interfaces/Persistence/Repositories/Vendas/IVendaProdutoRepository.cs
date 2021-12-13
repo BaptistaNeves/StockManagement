@@ -10,5 +10,6 @@ namespace StockManagement.Core.Interfaces.Persistence.Repositories.Vendas
 {
     public interface IVendaProdutoRepository : IRepository<VendaProduto>
     {
+        Task<VendaProduto> ObterVendaProdutoPorVendaId(Guid id);
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StockManagement.Application.Interface.Services.Catalogo;
+using StockManagement.Application.Interface.Services.Movimentacao;
 using StockManagement.Application.Interface.Services.Pessoa;
+using StockManagement.Application.Interface.Services.Vendas;
 using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Notification;
 using StockManagement.Application.Services.Catalogo;
+using StockManagement.Application.Services.Movimentacao;
 using StockManagement.Application.Services.Pessoa;
+using StockManagement.Application.Services.Vendas;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Catalogo;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Movimentacao;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Pessoa;
@@ -36,6 +40,10 @@ namespace StockManagement.Api.Extensions.Startup
             services.AddScoped<IProdutoService, ProdutoService>();
 
             services.AddScoped<IClienteService, ClienteService>();
+
+            services.AddScoped<IEstoqueService, EstoqueService>();
+
+            services.AddScoped<IVendaService, VendaService>();
 
             return services;
         }

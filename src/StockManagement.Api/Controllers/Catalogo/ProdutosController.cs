@@ -34,7 +34,7 @@ namespace StockManagement.Api.Controllers.Catalogo
         }
 
         [HttpPost("novo-produto")]
-        public async Task<ActionResult> Adicionar(ProdutoInputModel produtoModel)
+        public async Task<ActionResult> Adicionar([FromForm] ProdutoInputModel produtoModel)
         {
             if (!ModelState.IsValid) return Resposta(ModelState);
 

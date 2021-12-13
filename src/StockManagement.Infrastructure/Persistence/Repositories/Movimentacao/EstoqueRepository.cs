@@ -22,8 +22,6 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
 
             estoque.DecrementarQuantidade(quantidade);
 
-            _context.Update(estoque);
-
             await UnitOfWork.Salvar();
         }
 

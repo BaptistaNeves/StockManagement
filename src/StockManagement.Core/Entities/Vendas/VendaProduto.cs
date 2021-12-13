@@ -1,9 +1,5 @@
 ﻿using StockManagement.Core.Entities.Catalogo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockManagement.Core.Entities.Vendas
 {
@@ -17,5 +13,26 @@ namespace StockManagement.Core.Entities.Vendas
 
         public Produto Produto { get; private set; }
         public Venda Venda { get; private set; }
+
+        public VendaProduto(Guid? produtoId, Guid? vendaId, int?
+            quantidade, double? precoUnitario, double? subtotal)
+        {
+            ProdutoId = produtoId;
+            VendaId = vendaId;
+            Quantidade = quantidade;
+            PrecoUnitario = precoUnitario;
+            Subtotal = subtotal;
+        }
+
+        public void CalcularOSubTotalDaVenda()
+        {
+            Subtotal = PrecoUnitario * Quantidade;
+        }
+
+        public void AtribuirOIdDaVenda(Guid id)
+        {
+            VendaId = id;
+        }
+
     }
 }

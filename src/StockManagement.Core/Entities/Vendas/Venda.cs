@@ -1,9 +1,6 @@
-﻿using System;
+﻿using StockManagement.Core.Entities.Pessoa;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockManagement.Core.Entities.Pessoa;
 
 namespace StockManagement.Core.Entities.Vendas
 {
@@ -17,5 +14,23 @@ namespace StockManagement.Core.Entities.Vendas
 
         public Cliente Cliente { get; private set; }
         public ICollection<VendaProduto> VendaProdutos { get; private set; }
+
+        public Venda(Guid? clienteId, Guid? usuarioId, double? total, string observacao)
+        {
+            ClienteId = clienteId;
+            UsuarioId = usuarioId;
+            Total = total;
+            Observacao = observacao;
+        }
+
+        public Guid ObterIdDaVenda()
+        {
+            return Id;
+        }
+
+        public void CalcularOTotalDaVenda(double subTotalDaVenda)
+        {
+            Total = Total + subTotalDaVenda;
+        }
     }
 }

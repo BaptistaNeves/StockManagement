@@ -22,7 +22,6 @@ namespace StockManagement.Application.InputModels.Catalogo
 
         public bool Estocavel { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O Estoque Minimo deve ter o valor minimo de {1}!")]
         public int EstoqueMinimo { get; set; }
 
         public string Imagem { get; set; }
