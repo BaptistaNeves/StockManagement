@@ -1,9 +1,5 @@
 ﻿using StockManagement.Core.Entities.Catalogo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockManagement.Core.Entities.Movimentacao
 {
@@ -27,6 +23,11 @@ namespace StockManagement.Core.Entities.Movimentacao
         public void DecrementarQuantidade(int quantidade)
         {
             Quantidade = Quantidade - quantidade;
+        }
+
+        public void IncrementarQuantidade(int quantidade)
+        {
+            Quantidade = Quantidade + quantidade;
         }
     }
 }

@@ -16,5 +16,7 @@ namespace StockManagement.Core.Interfaces.Persistence.Repositories.Movimentacao
         Task<PagedList<EstoqueDto>> ObterProdutosEmAbaixaNoEstoque(PaginationParams pagainationParams);
         Task<PagedList<EstoqueDto>> ObterProdutosVaziosNoEstoque(PaginationParams pagainationParams);
         Task DecrementarQuantidadeProdutoNoEstoque(Guid produtoId, int quantidade);
+        Task IncrementarQuantidadeProdutoNoEstoque(Guid produtoId, int quantidade);
+        Task<bool> VerificarQuantidadeDeProdutoNoEstoque(Guid produtoId, int quantidade);
     }
 }

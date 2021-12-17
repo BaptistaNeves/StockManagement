@@ -15,6 +15,15 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Vendas
     {
         public VendaRepository(AppDbContext context) : base(context) {}
 
+        public async Task AnularVenda(Guid vendaId)
+        {
+            var venda = await _context.Vendas.AsNoTracking()
+                                .FirstOrDefaultAsync(e => e.Id == vendaId);
+            venda.AnularVenda();
+
+            _context.Update(venda);
+        }
+
         public async Task<VendaDto> ObterVendaPorId(Guid id)
         {
             return await _context.Vendas.AsNoTracking()
@@ -25,13 +34,15 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Vendas
                             {
                                 Id = venda.Id,
                                 NomeDoCliente = venda.Cliente.Nome,
-                                Total = (double)venda.Total,
+                                Total = venda.Total,
                                 DataDaVenda = venda.DataCadastro,
                                 Observacao = venda.Observacao,
+                                ProdutoId = venda.VendaProdutos.Select(vp => vp.ProdutoId).FirstOrDefault(),
                                 NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).ToString(),
-                                Quantidade = (int)venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
-                                PrecoUnitario = (double)venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
-                                SubTotal = (double)venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault()
+                                Quantidade = venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
+                                PrecoUnitario = venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
+                                SubTotal = venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault(),
+                                Status = venda.Status == false ? "Anulada" : "Activa"
                             }).FirstOrDefaultAsync(v => v.Id == id);
         }
 
@@ -41,30 +52,101 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Vendas
                             .Include(v => v.Cliente)
                             .Include(v => v.VendaProdutos)
                             .ThenInclude(vp => vp.Produto)
+                            .Where(v => v.Status != false)
                             .Select(venda => new VendaDto
                             {
                                 Id = venda.Id,
                                 NomeDoCliente = venda.Cliente.Nome,
-                                Total = (double)venda.Total,
+                                Total = venda.Total,
                                 DataDaVenda = venda.DataCadastro,
                                 Observacao = venda.Observacao,
-                                NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).ToString(),
-                                Quantidade = (int) venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
-                                PrecoUnitario = (double) venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
-                                SubTotal = (double)venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault()
+                                ProdutoId = venda.VendaProdutos.Select(vp => vp.ProdutoId).FirstOrDefault(),
+                                NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).FirstOrDefault(),
+                                Quantidade = venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
+                                PrecoUnitario = venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
+                                SubTotal = venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault(),
+                                Status = venda.Status == false ? "Anulada" : "Activa"
                             });
 
             return await PagedList<VendaDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public Task<PagedList<VendaDto>> ObterVendasDeHoje(PaginationParams paginationParams)
+        public async Task<PagedList<VendaDto>> ObterVendasAnuladas(PaginationParams paginationParams)
         {
-            throw new NotImplementedException();
+            var query = _context.Vendas.AsNoTracking()
+                           .Include(v => v.Cliente)
+                           .Include(v => v.VendaProdutos)
+                           .ThenInclude(vp => vp.Produto)
+                           .Where(v => v.Status == false)
+                           .Select(venda => new VendaDto
+                           {
+                               Id = venda.Id,
+                               NomeDoCliente = venda.Cliente.Nome,
+                               Total = venda.Total,
+                               DataDaVenda = venda.DataCadastro,
+                               Observacao = venda.Observacao,
+                               ProdutoId = venda.VendaProdutos.Select(vp => vp.ProdutoId).FirstOrDefault(),
+                               NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).FirstOrDefault(),
+                               Quantidade = venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
+                               PrecoUnitario = venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
+                               SubTotal = venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault(),
+                               Status = venda.Status == false ? "Anulada" : "Activa"
+                           });
+
+            return await PagedList<VendaDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public Task<PagedList<VendaDto>> ObterVendasPorMes(string mes, PaginationParams paginationParams)
+        public async Task<PagedList<VendaDto>> ObterVendasDeHoje(PaginationParams paginationParams)
         {
-            throw new NotImplementedException();
+            var hoje = DateTime.Now.Date;
+
+            var query = _context.Vendas.AsNoTracking()
+                        .Include(v => v.Cliente)
+                        .Include(v => v.VendaProdutos)
+                        .ThenInclude(vp => vp.Produto)
+                        .Where(v => v.DataCadastro.Date == hoje)
+                        .Select(venda => new VendaDto
+                        {
+                            Id = venda.Id,
+                            NomeDoCliente = venda.Cliente.Nome,
+                            Total = (double)venda.Total,
+                            DataDaVenda = venda.DataCadastro,
+                            Observacao = venda.Observacao,
+                            ProdutoId = venda.VendaProdutos.Select(vp => vp.ProdutoId).FirstOrDefault(),
+                            NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).FirstOrDefault(),
+                            Quantidade = (int)venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
+                            PrecoUnitario = (double)venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
+                            SubTotal = (double)venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault(),
+                            Status = venda.Status == false ? "Anulada" : "Activa"
+                        });
+
+            return await PagedList<VendaDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
+
+        }
+
+        public async Task<PagedList<VendaDto>> ObterVendasPorMes(int mes, PaginationParams paginationParams)
+        {
+            var query = _context.Vendas.AsNoTracking()
+                        .Include(v => v.Cliente)
+                        .Include(v => v.VendaProdutos)
+                        .ThenInclude(vp => vp.Produto)
+                        .Where(v => v.DataCadastro.Month == mes)
+                        .Select(venda => new VendaDto
+                        {
+                            Id = venda.Id,
+                            NomeDoCliente = venda.Cliente.Nome,
+                            Total = (double)venda.Total,
+                            DataDaVenda = venda.DataCadastro,
+                            Observacao = venda.Observacao,
+                            ProdutoId = venda.VendaProdutos.Select(vp => vp.ProdutoId).FirstOrDefault(),
+                            NomeDoProduto = venda.VendaProdutos.Select(vp => vp.Produto.Nome).FirstOrDefault(),
+                            Quantidade = (int)venda.VendaProdutos.Select(vp => vp.Quantidade).FirstOrDefault(),
+                            PrecoUnitario = (double)venda.VendaProdutos.Select(vp => vp.PrecoUnitario).FirstOrDefault(),
+                            SubTotal = (double)venda.VendaProdutos.Select(vp => vp.Subtotal).FirstOrDefault(),
+                            Status = venda.Status == false ? "Anulada" : "Activa"
+                        });
+
+            return await PagedList<VendaDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
     }
 }

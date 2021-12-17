@@ -24,11 +24,11 @@ namespace StockManagement.Shared.Pagination
         public int TotalCount { get; set; }
 
         public static async Task<PagedList<TEntidade>> CreateAsync(IQueryable<TEntidade> source, 
-            int pageNumer, int pageSize)
+            int pageNumber, int pageSize)
         {
             var count = await source.CountAsync();
-            var items = await source.Skip((pageNumer - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new PagedList<TEntidade>(items, count, pageNumer, pageSize);
+            var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new PagedList<TEntidade>(items, count, pageNumber, pageSize);
         }
     }
 }

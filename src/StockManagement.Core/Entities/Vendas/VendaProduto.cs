@@ -14,14 +14,11 @@ namespace StockManagement.Core.Entities.Vendas
         public Produto Produto { get; private set; }
         public Venda Venda { get; private set; }
 
-        public VendaProduto(Guid? produtoId, Guid? vendaId, int?
-            quantidade, double? precoUnitario, double? subtotal)
+        public VendaProduto(Guid? produtoId, int? quantidade, double? precoUnitario)
         {
             ProdutoId = produtoId;
-            VendaId = vendaId;
             Quantidade = quantidade;
             PrecoUnitario = precoUnitario;
-            Subtotal = subtotal;
         }
 
         public void CalcularOSubTotalDaVenda()

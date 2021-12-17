@@ -29,6 +29,11 @@ namespace StockManagement.Infrastructure.Persistence.Mappings.Vendas
                .IsRequired(false)
                .HasColumnType("varchar(max)");
 
+            builder.Property(v => v.Status)
+              .IsRequired(false)
+              .HasColumnType("bit")
+              .HasDefaultValue(true);
+
             builder.Property(v => v.DataCadastro)
                .IsRequired()
                .HasColumnType("datetime2");

@@ -41,10 +41,18 @@ namespace StockManagement.Application.Services.Vendas
 
             vendaProduto.CalcularOSubTotalDaVenda();
             venda.CalcularOTotalDaVenda((double) vendaProduto.Subtotal);
-            vendaProduto.AtribuirOIdDaVenda(venda.Id);
+
+            if(await _estoqueRepository.VerificarQuantidadeDeProdutoNoEstoque(vendaModel.ProdutoId,
+                vendaModel.Quantidade))
+            {
+                AdicionarNotificacao("A quantidade do produto no estoque é inferior a requerida!");
+                return;
+            }
 
             _vendaRepository.Adicionar(venda);
             await _vendaRepository.UnitOfWork.Salvar();
+
+            vendaProduto.AtribuirOIdDaVenda(venda.Id);
 
             _vendaProdutoRepository.Adicionar(vendaProduto);
             await _vendaProdutoRepository.UnitOfWork.Salvar();
@@ -53,33 +61,24 @@ namespace StockManagement.Application.Services.Vendas
                                     vendaProduto.ProdutoId, (int) vendaProduto.Quantidade);
         }
 
-        public async Task Atualizar(VendaInputModel vendaModel)
-        {
-            if (!ExecutarValidacao(new ValidacaoVenda(), vendaModel)) return;
-
-            var venda = _mapper.Map<Venda>(vendaModel);
-            var vendaProduto = _mapper.Map<VendaProduto>(vendaModel);
-
-            vendaProduto.CalcularOSubTotalDaVenda();
-            venda.CalcularOTotalDaVenda((double) vendaProduto.Subtotal);
-            vendaProduto.AtribuirOIdDaVenda(venda.Id);
-
-            _vendaRepository.Atualizar(venda);
-            await _vendaRepository.UnitOfWork.Salvar();
-
-            _vendaProdutoRepository.Atualizar(vendaProduto);
-            await _vendaProdutoRepository.UnitOfWork.Salvar();
-        }
-
         public async Task Remover(Guid id)
         {
-            await _vendaRepository.Remover(id);
-            await _vendaRepository.UnitOfWork.Salvar();
-
             var vendaProduto = await _vendaProdutoRepository.ObterVendaProdutoPorVendaId(id);
 
             await _vendaProdutoRepository.Remover(vendaProduto.Id);
+            await _vendaProdutoRepository.UnitOfWork.Salvar();
+
+            await _vendaRepository.Remover(id);
             await _vendaRepository.UnitOfWork.Salvar();
+        }
+
+        public async Task AnularVenda(Guid vendaId, Guid produtoId, int quantidadeProduto)
+        {
+            await _vendaRepository.AnularVenda(vendaId);
+            await _vendaRepository.UnitOfWork.Salvar();
+
+            await _estoqueRepository.IncrementarQuantidadeProdutoNoEstoque(produtoId, quantidadeProduto);
+            await _estoqueRepository.UnitOfWork.Salvar();
         }
 
         public async Task<VendaDto> ObterVendaPorId(Guid id)
@@ -92,14 +91,19 @@ namespace StockManagement.Application.Services.Vendas
             return await _vendaRepository.ObterVendas(paginationParams);
         }
 
-        public Task<PagedList<VendaDto>> ObterVendasDeHoje(PaginationParams paginationParams)
+        public async Task<PagedList<VendaDto>> ObterVendasAnuladas(PaginationParams paginationParams)
         {
-            throw new NotImplementedException();
+            return await _vendaRepository.ObterVendasAnuladas(paginationParams);
         }
 
-        public Task<PagedList<VendaDto>> ObterVendasPorMes(string mes, PaginationParams paginationParams)
+        public async  Task<PagedList<VendaDto>> ObterVendasDeHoje(PaginationParams paginationParams)
         {
-            throw new NotImplementedException();
+            return await _vendaRepository.ObterVendasDeHoje(paginationParams);
+        }
+
+        public async Task<PagedList<VendaDto>> ObterVendasPorMes(int mes, PaginationParams paginationParams)
+        {
+            return await _vendaRepository.ObterVendasPorMes(mes, paginationParams);
         }
 
 

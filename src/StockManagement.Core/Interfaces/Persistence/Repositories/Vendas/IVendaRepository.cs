@@ -14,7 +14,9 @@ namespace StockManagement.Core.Interfaces.Persistence.Repositories.Vendas
     {
         Task<VendaDto> ObterVendaPorId(Guid id);
         Task<PagedList<VendaDto>> ObterVendas(PaginationParams paginationParams);
+        Task<PagedList<VendaDto>> ObterVendasAnuladas(PaginationParams paginationParams);
         Task<PagedList<VendaDto>> ObterVendasDeHoje(PaginationParams paginationParams);
-        Task<PagedList<VendaDto>> ObterVendasPorMes(string mes, PaginationParams paginationParams);
+        Task<PagedList<VendaDto>> ObterVendasPorMes(int mes, PaginationParams paginationParams);
+        Task AnularVenda(Guid vendaId);
     }
 }

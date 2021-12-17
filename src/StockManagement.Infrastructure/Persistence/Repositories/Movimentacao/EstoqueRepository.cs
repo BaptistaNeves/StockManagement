@@ -22,7 +22,19 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
 
             estoque.DecrementarQuantidade(quantidade);
 
+            _context.Update(estoque);
+
             await UnitOfWork.Salvar();
+        }
+
+        public async Task IncrementarQuantidadeProdutoNoEstoque(Guid produtoId, int quantidade)
+        {
+            var estoque = await _context.Estoques.AsNoTracking()
+                                .FirstOrDefaultAsync(e => e.ProdutoId == produtoId);
+
+            estoque.IncrementarQuantidade(quantidade);
+
+            _context.Update(estoque);
         }
 
         public async Task<PagedList<EstoqueDto>> ObterProdutosEmAbaixaNoEstoque(PaginationParams paginationParams)
@@ -32,6 +44,7 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
                                .Where(e => e.Quantidade <= e.Produto.EstoqueMinimo && e.Quantidade != 0)
                                .Select(estoque => new EstoqueDto
                                {
+                                   Id = estoque.Id,
                                    ProdutoId = (Guid)estoque.ProdutoId,
                                    ProdutoNome = estoque.Produto.Nome,
                                    Quantidade = (int)estoque.Quantidade,
@@ -48,6 +61,7 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
                                 .Include(e => e.Produto)
                                 .Select(estoque => new EstoqueDto
                                 {
+                                    Id = estoque.Id,
                                     ProdutoId = (Guid) estoque.ProdutoId,
                                     ProdutoNome = estoque.Produto.Nome,
                                     Quantidade = (int) estoque.Quantidade,
@@ -65,6 +79,7 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
                                .Where(e => e.Quantidade == 0)
                                .Select(estoque => new EstoqueDto
                                {
+                                   Id = estoque.Id,
                                    ProdutoId = (Guid)estoque.ProdutoId,
                                    ProdutoNome = estoque.Produto.Nome,
                                    Quantidade = (int)estoque.Quantidade,
@@ -73,6 +88,12 @@ namespace StockManagement.Infrastructure.Persistence.Repositories.Movimentacao
                                });
 
             return await PagedList<EstoqueDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
+        }
+
+        public async Task<bool> VerificarQuantidadeDeProdutoNoEstoque(Guid produtoId, int quantidade)
+        {
+            return await _context.Estoques.AsNoTracking()
+                .Where(e => e.ProdutoId == produtoId && e.Quantidade < quantidade).AnyAsync();
         }
     }
 }
