@@ -41,7 +41,9 @@ namespace StockManagement.Api.Controllers.Movimentacao
         [HttpGet("obter-estoque-por-id/{id:guid}")]
         public async Task<ActionResult<EstoqueDto>> ObterPorId(Guid id)
         {
-            return Ok(await _estoqueService.ObterPorId(id));
+            var estoque = await _estoqueService.ObterPorId(id);
+            if (estoque == null) return NotFound();
+            return Ok(estoque);
         }
 
         [HttpPost("entrada-estoque")]

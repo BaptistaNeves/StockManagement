@@ -25,14 +25,20 @@ namespace StockManagement.Api.Controllers.Vendas
             return Ok(await _vendaService.ObterVendas(paginationParams));
         }
 
+        [HttpGet("obter-vendas-anuladas")]
+        public async Task<ActionResult<ICollection<VendaDto>>> ObterVendasAnuladas([FromQuery] PaginationParams paginationParams)
+        {
+            return Ok(await _vendaService.ObterVendasAnuladas(paginationParams));
+        }
+
         [HttpGet("obter-vendas-hoje")]
         public async Task<ActionResult<ICollection<VendaDto>>> ObterVendasDeHoje([FromQuery] PaginationParams paginationParams)
         {
             return Ok(await _vendaService.ObterVendasDeHoje(paginationParams));
         }
 
-        [HttpGet("obter-vendas-por-mes/{mes:string}")]
-        public async Task<ActionResult<ICollection<VendaDto>>> ObterVendasPorMes(string mes, [FromQuery] PaginationParams paginationParams)
+        [HttpGet("obter-vendas-por-mes/{mes:int}")]
+        public async Task<ActionResult<ICollection<VendaDto>>> ObterVendasPorMes(int mes, [FromQuery] PaginationParams paginationParams)
         {
             return Ok(await _vendaService.ObterVendasPorMes(mes, paginationParams));
         }
@@ -53,22 +59,22 @@ namespace StockManagement.Api.Controllers.Vendas
             return Resposta(vendaModel);
         }
 
-        [HttpPut("editar-venda/{id:guid}")]
-        public async Task<ActionResult> Atualizar(VendaInputModel vendaModel)
+        [HttpPut("anular-venda/{vendaId:guid}")]
+        public async Task<ActionResult> Atualizar(Guid vendaId, AnularVendaInputModel anularVenda)
         {
             if (!ModelState.IsValid) return Resposta(ModelState);
 
-            await _vendaService.Atualizar(vendaModel);
+            await _vendaService.AnularVenda(vendaId, anularVenda.ProdutoId, anularVenda.Quantidade);
 
-            return Resposta(vendaModel);
+            return Resposta(anularVenda);
         }
 
-        [HttpDelete("remover-venda/{id:guid}")]
+        [HttpDelete("excluir-venda/{id:guid}")]
         public async Task<ActionResult> Remover(Guid id)
         {
-            var categoria = await _vendaService.ConsultarVendaPorId(id);
+            var venda = await _vendaService.ConsultarVendaPorId(id);
 
-            if (categoria == null) return NotFound();
+            if (venda == null) return NotFound();
 
             await _vendaService.Remover(id);
 
