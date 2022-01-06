@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interface\Services\Usuarios\IUsuarioService.cs~RF194481.TMP\**" />
+    <EmbeddedResource Remove="Interface\Services\Usuarios\IUsuarioService.cs~RF194481.TMP\**" />
+    <None Remove="Interface\Services\Usuarios\IUsuarioService.cs~RF194481.TMP\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="FluentValidation" Version="10.3.5" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />

@@ -1,4 +1,4 @@
-﻿namespace StockManagement.Application.Notification
+﻿namespace StockManagement.Core.Notification
 {
     public class Notificacao
     {

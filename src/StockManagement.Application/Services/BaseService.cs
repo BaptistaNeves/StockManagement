@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using StockManagement.Application.Interfaces.Notification;
-using StockManagement.Application.Notification;
+using StockManagement.Core.Interfaces.Notification;
+using StockManagement.Core.Notification;
 
 namespace StockManagement.Application.Services
 {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Catalogo;
 using StockManagement.Core.DTOs.Catalogo;
 using StockManagement.Core.Entities.Catalogo;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Catalogo;
 using StockManagement.Shared.Pagination;
 using System;

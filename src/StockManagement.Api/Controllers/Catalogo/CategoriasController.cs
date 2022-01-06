@@ -2,8 +2,8 @@
 using StockManagement.Application.Extensions;
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace StockManagement.Api.Controllers.Catalogo
 {
-    public class CategoriasController : MainController
+    public class UsuariosController : MainController
     {
         private readonly ICategoriaService _categoriaService;
-        public CategoriasController(INotificador noticador, 
+        public UsuariosController(INotificador noticador, 
                                    ICategoriaService categoriaService) : base(noticador)
         {
             _categoriaService = categoriaService;

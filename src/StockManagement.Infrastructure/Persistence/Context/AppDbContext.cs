@@ -1,16 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StockManagement.Core.Entities.Catalogo;
 using StockManagement.Core.Entities.Movimentacao;
 using StockManagement.Core.Entities.Pessoa;
 using StockManagement.Core.Entities.Vendas;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Generico;
+using StockManagement.Infraestructure.Persistence.Identity.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace StockManagement.Infrastructure.Persistence.Context
 {
-    public class AppDbContext : DbContext, IUnitOfWork
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid,
+                                IdentityUserClaim<Guid>, AppUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>,
+                                IdentityUserToken<Guid>>, IUnitOfWork
     {
         public AppDbContext(DbContextOptions options) : base(options) {}
 

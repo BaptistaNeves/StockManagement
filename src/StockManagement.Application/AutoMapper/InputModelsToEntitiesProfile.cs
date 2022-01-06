@@ -2,10 +2,12 @@
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.InputModels.Movimentacao;
 using StockManagement.Application.InputModels.Pessoa;
+using StockManagement.Application.InputModels.Usuarios;
 using StockManagement.Application.InputModels.Vendas;
 using StockManagement.Core.Entities.Catalogo;
 using StockManagement.Core.Entities.Movimentacao;
 using StockManagement.Core.Entities.Pessoa;
+using StockManagement.Core.Entities.Usuario;
 using StockManagement.Core.Entities.Vendas;
 
 namespace StockManagement.Application.AutoMapper
@@ -23,6 +25,8 @@ namespace StockManagement.Application.AutoMapper
 
             CreateMap<VendaInputModel, Venda>();
             CreateMap<VendaInputModel, VendaProduto>();
+
+            CreateMap<UsuarioInputModel, Usuario>();
         }
     }
 }

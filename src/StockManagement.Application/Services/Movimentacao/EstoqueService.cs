@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using StockManagement.Application.InputModels.Movimentacao;
 using StockManagement.Application.Interface.Services.Movimentacao;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Movimentacao;
 using StockManagement.Core.DTOs.Movimentacao;
 using StockManagement.Core.Entities.Movimentacao;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Movimentacao;
 using StockManagement.Shared.Pagination;
 using System;

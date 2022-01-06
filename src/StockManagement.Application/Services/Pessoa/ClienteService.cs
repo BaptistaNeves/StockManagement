@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using StockManagement.Application.InputModels.Pessoa;
 using StockManagement.Application.Interface.Services.Pessoa;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Pessoa;
 using StockManagement.Core.DTOs.Pessoa;
 using StockManagement.Core.Entities.Pessoa;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Pessoa;
 using StockManagement.Shared.Pagination;
 using System;

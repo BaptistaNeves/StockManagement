@@ -1,11 +1,7 @@
-﻿using StockManagement.Application.Notification;
-using System;
+﻿using StockManagement.Core.Notification;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StockManagement.Application.Interfaces.Notification
+namespace StockManagement.Core.Interfaces.Notification
 {
     public interface INotificador
     {

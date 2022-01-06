@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Movimentacao;
 using StockManagement.Application.Interface.Services.Movimentacao;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Core.DTOs.Movimentacao;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;

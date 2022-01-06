@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Vendas;
 using StockManagement.Application.Interface.Services.Vendas;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Core.DTOs.Vendas;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;

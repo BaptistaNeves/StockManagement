@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using StockManagement.Application.Interfaces.Notification;
-using StockManagement.Application.Notification;
+using StockManagement.Core.Interfaces.Notification;
+using StockManagement.Core.Notification;
 using System.Linq;
 
 namespace StockManagement.Api.Controllers

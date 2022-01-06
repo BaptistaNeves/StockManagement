@@ -29,7 +29,7 @@ namespace StockManagement.Api
 
             services.AddControllers();
 
-            services.AddDbContextConfig(Configuration);
+            services.AddIdentityConfig(Configuration);
 
             services.ResolveDependecies();
 

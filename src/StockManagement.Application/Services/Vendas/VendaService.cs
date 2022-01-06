@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using StockManagement.Application.InputModels.Vendas;
 using StockManagement.Application.Interface.Services.Vendas;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Application.Validations.Vendas;
 using StockManagement.Core.DTOs.Vendas;
 using StockManagement.Core.Entities.Vendas;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Movimentacao;
 using StockManagement.Core.Interfaces.Persistence.Repositories.Vendas;
 using StockManagement.Shared.Pagination;

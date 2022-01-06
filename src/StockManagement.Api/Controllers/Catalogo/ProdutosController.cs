@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Catalogo;
 using StockManagement.Application.Interface.Services.Catalogo;
-using StockManagement.Application.Interfaces.Notification;
 using StockManagement.Core.DTOs.Catalogo;
+using StockManagement.Core.Interfaces.Notification;
 using StockManagement.Shared.Pagination;
 using System;
 using System.Collections.Generic;
