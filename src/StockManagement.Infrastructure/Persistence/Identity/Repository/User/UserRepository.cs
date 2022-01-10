@@ -205,7 +205,7 @@ namespace StockManagement.Infrastructure.Persistence.Identity.Repository.User
                                     Id = usuario.Id,
                                     Nome = usuario.NomeDeUtilizador,
                                     Email = usuario.Email,
-                                    Roles = usuario.UserRoles.Select(ur => ur.Role.Name)
+                                    Roles = usuario.UserRoles.Select(ur => ur.Role.Name).ToList()
                                 }).SingleOrDefaultAsync();
 
         }
@@ -235,7 +235,15 @@ namespace StockManagement.Infrastructure.Persistence.Identity.Repository.User
         }
         public async Task<bool> Login(string email, string senha)
         {
-            var resultado = await _signInManager.PasswordSignInAsync(email, senha, false, true);
+            var usuario = await _userManager.FindByEmailAsync(email);
+
+            if (usuario == null)
+            {
+                _notificador.AdicionarNotificacao(new Notificacao("Usuário ou Senha incorretos!"));
+                return false;
+            }
+
+            var resultado = await _signInManager.CheckPasswordSignInAsync(usuario, senha, true);
 
             if(resultado.Succeeded)
             {

@@ -11,13 +11,15 @@ namespace StockManagement.Api.Controllers.Login
     {
         private readonly IUsuarioService _usuarioService;
         private readonly ITokenService _tokenService;
-        public LoginController(INotificador noticador, 
-                               IUsuarioService usuarioService) : base(noticador)
+        public LoginController(INotificador noticador,
+                               IUsuarioService usuarioService, 
+                               ITokenService tokenService) : base(noticador)
         {
             _usuarioService = usuarioService;
+            _tokenService = tokenService;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<ActionResult> Login(LoginInputModel loginModel)
         {
             if (!ModelState.IsValid) return Resposta(ModelState);

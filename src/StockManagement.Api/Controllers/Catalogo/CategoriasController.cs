@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace StockManagement.Api.Controllers.Catalogo
 {
-    public class UsuariosController : MainController
+    public class CategoriasController : MainController
     {
         private readonly ICategoriaService _categoriaService;
-        public UsuariosController(INotificador noticador, 
+        public CategoriasController(INotificador noticador, 
                                    ICategoriaService categoriaService) : base(noticador)
         {
             _categoriaService = categoriaService;

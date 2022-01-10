@@ -17,18 +17,31 @@ namespace StockManagement.Infrastructure.Persistence.Context
                                 IdentityUserClaim<Guid>, AppUserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>,
                                 IdentityUserToken<Guid>>, IUnitOfWork
     {
-        public AppDbContext(DbContextOptions options) : base(options) {}
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
-            foreach(var relacao in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            modelBuilder.Entity<AppRole>()
+                       .HasMany(r => r.UserRoles)
+                       .WithOne(ur => ur.Role)
+                       .HasForeignKey(ur => ur.RoleId)
+                       .IsRequired();
+
+            modelBuilder.Entity<AppUser>()
+                       .HasMany(u => u.UserRoles)
+                       .WithOne(ur => ur.Usuario)
+                       .HasForeignKey(ur => ur.UserId)
+                       .IsRequired();
+
+            foreach (var relacao in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relacao.DeleteBehavior = DeleteBehavior.ClientSetNull;
             }
 
-            base.OnModelCreating(modelBuilder);
         }
 
         public async Task<bool> Salvar()
@@ -47,6 +60,21 @@ namespace StockManagement.Infrastructure.Persistence.Context
             }
 
             return await base.SaveChangesAsync() > 0;
+        }
+
+        private void DefenirRelacionamentoDoIdentity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AppRole>()
+                       .HasMany(r => r.UserRoles)
+                       .WithOne(ur => ur.Role)
+                       .HasForeignKey(ur => ur.RoleId)
+                       .IsRequired();
+
+            modelBuilder.Entity<AppUser>()
+                       .HasMany(u => u.UserRoles)
+                       .WithOne(ur => ur.Usuario)
+                       .HasForeignKey(ur => ur.UserId)
+                       .IsRequired();
         }
 
         public DbSet<Categoria> Categorias { get; set; }

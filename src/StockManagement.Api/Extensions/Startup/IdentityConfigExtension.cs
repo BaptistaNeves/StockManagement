@@ -58,8 +58,8 @@ namespace StockManagement.Api.Extensions.Startup
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policy => policy.RequireRole("Administrator"));
-                options.AddPolicy("Moderador", policy => policy.RequireRole("Moderator"));
+                options.AddPolicy("PerfilAdmin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("PerfilModerador", policy => policy.RequireRole("Moderador"));
             });
 
             return services;

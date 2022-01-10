@@ -41,6 +41,7 @@ namespace StockManagement.Api.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                Subject = new ClaimsIdentity(claims),
                 Issuer = _appSettings.Emissor,
                 Audience = _appSettings.ValidoEm,
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
@@ -54,6 +55,7 @@ namespace StockManagement.Api.Services
                 Id = usuario.Id,
                 Nome = usuario.Nome,
                 Email = usuario.Email,
+                Perfil = usuario.Roles.FirstOrDefault(),
                 Token = tokenHandler.WriteToken(token)
             };
         }

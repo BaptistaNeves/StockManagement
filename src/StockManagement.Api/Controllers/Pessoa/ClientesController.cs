@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockManagement.Application.InputModels.Pessoa;
 using StockManagement.Application.Interface.Services.Pessoa;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace StockManagement.Api.Controllers.Pessoa
 {
+    [Authorize(Roles ="Admin, Moderador")]
     public class ClientesController : MainController
     {
         private readonly IClienteService _clienteService;

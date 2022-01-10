@@ -25,7 +25,7 @@ namespace StockManagement.Api.Controllers.Usuarios
             return Ok(await _usuarioService.ObterUsuariosERoles());
         }
 
-        [HttpGet("obter-usuarios-por-id/{id:guid}")]
+        [HttpGet("obter-usuario-por-id/{id:guid}")]
         public async Task<ActionResult<UsuarioDto>> ObterPorId(Guid id)
         {
             return Ok(await _usuarioService.ObterUsuarioERolesPorId(id));
